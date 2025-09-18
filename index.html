@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raysantiger - Tenze | Jogo Alpha</title>
+  <link rel="icon" type="image/ico" href="raysantiger.ico">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ------------------------------------------- */
+    /* PALETA DE CORES (Inspirada em Tokyo Night/Catppuccin) */
+    /* ------------------------------------------- */
+    :root {
+      --cor-fundo-principal: #1f2335; /* Fundo bem escuro */
+      --cor-fundo-card: #282a36; /* Fundo dos elementos (iframe/texto) */
+      --cor-borda-sutil: #414868; /* Borda ou separador */
+      --cor-texto-principal: #c8d3f5; /* Texto principal claro e suave */
+      --cor-texto-secundario: #a9b1d6; /* Texto de descrição */
+      --cor-destaque-primario: #ff9e64; /* Laranja/Amarelo para destaque (gradiente) */
+      --cor-destaque-secundario: #bb9af7; /* Roxo/Rosa para destaque (gradiente) */
+      --cor-instrucao: #7dcfff; /* Azul para as instruções (realce) */
+      --sombra-escura: rgba(0, 0, 0, 0.5);
+    }
+
+    /* ------------------------------------------- */
+    /* ESTILOS GERAIS E LAYOUT */
+    /* ------------------------------------------- */
+    body {
+      background-color: var(--cor-fundo-principal); 
+      font-family: 'Poppins', sans-serif;
+      margin: 0; 
+      padding: 0; 
+      color: var(--cor-texto-principal);
+      /* Centraliza o conteúdo vertical e horizontalmente */
+      display: flex; 
+      justify-content: center; 
+      align-items: flex-start; /* Altera para começar do topo, mas com margem */
+      min-height: 100vh; 
+      overflow-x: hidden; 
+      padding-top: 50px; /* Espaço do topo */
+      padding-bottom: 50px; /* Espaço do rodapé */
+    }
+
+    .container {
+      text-align: center; 
+      padding: 0 15px; /* Padding lateral */
+      max-width: 800px; /* Limite máximo para o conteúdo */
+      width: 100%;
+      box-sizing: border-box; 
+    }
+    
+    /* ------------------------------------------- */
+    /* TÍTULO H1 */
+    /* ------------------------------------------- */
+    h1 {
+      color: transparent; 
+      margin-bottom: 40px;
+      font-size: clamp(2.5em, 5vw, 4.5em); /* Tamanho maior e responsivo */
+      font-weight: 700; 
+      letter-spacing: 3px; 
+      text-transform: uppercase; /* Deixa o título mais impactante */
+
+      /* Novo degradê mais coeso */
+      background: linear-gradient(to right, var(--cor-destaque-primario), var(--cor-destaque-secundario)); 
+      
+      -webkit-background-clip: text; 
+      background-clip: text; 
+      
+      /* Sombra para destaque sutil */
+      text-shadow: 0 0 15px var(--cor-destaque-secundario), 0 0 5px var(--cor-destaque-primario);
+    }
+    
+    /* ------------------------------------------- */
+    /* CONTAINER DO IFRAME (O JOGO) */
+    /* ------------------------------------------- */
+    .iframe-wrapper {
+      background-color: var(--cor-fundo-card);
+      border: 1px solid var(--cor-borda-sutil); 
+      border-radius: 18px; 
+      /* Sombra mais escura e marcante */
+      box-shadow: 0 10px 30px var(--sombra-escura);
+      padding: 20px;
+      display: inline-block; 
+      transition: all 0.4s ease-in-out; 
+    }
+
+    /* Efeito de hover para interatividade */
+    .iframe-wrapper:hover {
+        transform: scale(1.02); /* Escala levemente */
+        /* Sombra de destaque com a cor do degradê */
+        box-shadow: 0 15px 40px rgba(187, 154, 247, 0.6); 
+    }
+
+    iframe {
+      display: block; 
+      border-radius: 12px; 
+      border: none;
+      /* Propriedade para manter a proporção correta e ser responsivo */
+      width: 100%; 
+      aspect-ratio: 482 / 412; 
+      max-width: 482px; /* Limita ao tamanho original para desktop */
+      max-height: 412px;
+    }
+
+    /* ------------------------------------------- */
+    /* DESCRIÇÃO E INSTRUÇÕES */
+    /* ------------------------------------------- */
+    .description-text {
+      font-size: 1.1em;
+      line-height: 1.7; /* Mais espaço entre as linhas */
+      margin-top: 40px;
+      padding: 25px;
+      background-color: var(--cor-fundo-card); 
+      border-radius: 15px;
+      color: var(--cor-texto-secundario); 
+      box-shadow: 0 5px 15px var(--sombra-escura);
+      text-align: left;
+    }
+
+    /* Estilo para a caixa de informações da versão */
+    .alpha-info {
+        display: block;
+        margin-top: 15px;
+        font-size: 0.95em;
+        font-weight: 600; /* Levemente mais bold */
+        color: var(--cor-destaque-primario);
+        padding: 5px 0;
+        border-top: 1px dashed var(--cor-borda-sutil);
+    }
+
+    .instructions-title {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: var(--cor-instrucao);
+        font-size: 1.2em;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Estilo para as teclas (melhor contraste) */
+    kbd {
+        display: inline-block;
+        padding: 3px 6px;
+        font-family: monospace;
+        font-size: 0.9em;
+        line-height: 1;
+        color: var(--cor-texto-principal);
+        background-color: #3b4261;
+        border: 1px solid #545c7e;
+        border-bottom-color: #3b4261;
+        border-radius: 5px;
+        box-shadow: inset 0 -2px 0 #3b4261;
+        margin: 0 2px;
+        white-space: nowrap;
+    }
+
+    /* ------------------------------------------- */
+    /* MEDIA QUERY (RESPONSIVIDADE) */
+    /* ------------------------------------------- */
+    @media (max-width: 650px) {
+      body {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        align-items: flex-start; /* Volta a alinhar ao topo em telas menores */
+      }
+      
+      .iframe-wrapper {
+        width: 100%; 
+        padding: 15px;
+        box-shadow: 0 5px 15px var(--sombra-escura); 
+      }
+      
+      .iframe-wrapper:hover {
+        transform: none; /* Desativa o hover em telas pequenas */
+        box-shadow: 0 5px 15px var(--sombra-escura); 
+      }
+
+      .description-text {
+          font-size: 1em;
+          padding: 20px;
+          margin-top: 30px;
+      }
+      
+      h1 {
+        font-size: 2.8em;
+        margin-bottom: 30px;
+        letter-spacing: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Raysantiger - Tenze</h1>
+    
+    <div class="iframe-wrapper">
+      <iframe 
+        src="https://turbowarp.org/1179980993/embed?fps=60" 
+        /* Removidas as larguras fixas, pois o CSS já está ajustando */
+        allowtransparency="true" 
+        frameborder="0" 
+        scrolling="no" 
+        allowfullscreen>
+      </iframe>
+    </div>
+    
+    <div class="description-text">
+        <p>
+            Uma sala escura com monstros que seguem você. Pegue estrelas e kits médicos, e tente ficar o máximo de tempo vivo!
+        </p>
+        
+        <span class="alpha-info">
+             Versão **Alpha** - O jogo pode conter erros ou funcionalidades incompletas.
+        </span>
+
+        <p class="instructions-title">
+            Instruções de Jogo:
+        </p>
+        
+        <p>
+            Ande com <kbd>WASD</kbd>, mova a câmera com as setas <kbd>←</kbd> <kbd>→</kbd> e abra as configurações apertando <kbd>Q</kbd> .
+        </p>
+    </div>
+    
+  </div>
+</body>
+</html>
